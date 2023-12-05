@@ -1,0 +1,13 @@
+/vendor
+/.idea
+.env
+.phpunit.result.cache
+error_log
+.vscode-server
+.vscode
+.ssh
+.phpls
+.gitconfig
+.composer
+.bash_history
+.composer

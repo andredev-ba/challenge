@@ -1,0 +1,79 @@
+version: '3'
+
+services:
+  api:
+    build: ./api
+    container_name: api
+    volumes:
+      - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - innyx-network
+
+  mysql:
+    build: ./docker/mysql
+    container_name: mysql
+    restart: always
+    tty: true
+    ports:
+        - "33066:3306"
+    volumes:
+        - ./docker/dbdata:/var/lib/mysql
+        - ./docker/mysql:/docker-entrypoint-initdb.d
+        - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    environment:
+        - MYSQL_DATABASE=innyx_db
+        - MYSQL_ROOT_PASSWORD=root
+    networks:
+        - innyx-network
+
+  app:
+    build: ./app
+    container_name: app
+    ports:
+      - "9000:9000"
+    networks:
+      - innyx-network
+
+  keycloak:
+    image: jboss/keycloak:latest
+    container_name: keycloak
+    environment:
+        - KEYCLOAK_USER=master
+        - KEYCLOAK_PASSWORD=desafio
+        - DB_VENDOR=h2
+    volumes:
+      - ./docker/keycloak/themes/innyx:/opt/jboss/keycloak/themes/innyx
+      - ./docker/keycloak_data:/opt/jboss/keycloak/standalone/data
+    ports:
+      - "8001:8080"
+    depends_on:
+      - mysql
+    networks:
+        - innyx-network
+
+  nginx:
+    build: ./docker/nginx
+    container_name: nginx
+    restart: always
+    tty: true
+    ports:
+      - "8000:80"
+    depends_on:
+      - api
+      #- app
+      - keycloak
+    networks:
+      - innyx-network
+
+  redis:
+      image: redis:alpine
+      container_name: redis
+      networks:
+          - innyx-network
+
+networks:
+  innyx-network:
+    driver: bridge

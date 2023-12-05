@@ -1,0 +1,47 @@
+# Ignorar diretórios de vendor e arquivos específicos
+api/vendor/
+api/.idea/
+api/.phpunit.result.cache
+api/error_log
+api/.vscode-server/
+api/.vscode/
+api/.ssh/
+api/.phpls/
+api/.gitconfig
+api/.composer/
+api/.bash_history
+
+app/.DS_Store
+app/.thumbs.db
+app/node_modules/
+
+# Quasar core related directories
+app/.quasar/
+
+# Cordova related directories and files
+app/src-cordova/node_modules/
+app/src-cordova/platforms/
+app/src-cordova/plugins/
+app/src-cordova/www/
+
+# Capacitor related directories and files
+app/src-capacitor/www/
+app/src-capacitor/node_modules/
+
+# BEX related directories and files
+app/src-bex/www/
+app/src-bex/js/core/
+
+# Log files
+app/pm-debug.log*
+app/yarn-debug.log*
+app/yarn-error.log*
+
+# Editor directories and files
+app/.idea/
+app/*.suo
+app/*.ntvs*
+app/*.njsproj
+app/*.sln
+
+app/.vscode/
