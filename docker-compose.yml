@@ -22,7 +22,6 @@ services:
     volumes:
         - ./docker/dbdata:/var/lib/mysql
         - ./docker/mysql:/docker-entrypoint-initdb.d
-        - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
     environment:
         - MYSQL_DATABASE=innyx_db
         - MYSQL_ROOT_PASSWORD=root
